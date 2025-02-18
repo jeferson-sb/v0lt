@@ -1,0 +1,33 @@
+<.header>
+  Collections
+  <:actions>
+    <.link patch={~p"/links/new"}>
+      <.button>New Link</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<%= for {_, col} <- @streams.urls do %>
+  <div class="border rounded p-5 max-w-lg">
+    <p class="font-bold text-lg mb-2">{col.name}</p>
+    <hr />
+    <ul>
+      <%= for url <- col.urls do %>
+        <li class="py-2">
+          <a href={prepend_url(url.link)} class="hover:underline" target="_blank">{url.link}</a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<.modal :if={@live_action in [:new, :edit]} id="url-modal" show on_cancel={JS.patch(~p"/links")}>
+  <.live_component
+    module={VoltWeb.UrlLive.FormComponent}
+    id={@url.id || :new}
+    title={@page_title}
+    action={@live_action}
+    url={@url}
+    patch={~p"/links"}
+  />
+</.modal>

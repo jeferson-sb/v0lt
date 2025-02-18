@@ -1,0 +1,7 @@
+<section>
+  <%= for {_, collection} <- @streams.collections do %>
+    <div class="border rounded p-5 max-w-lg">
+      <ul>{collection.id}</ul>
+    </div>
+  <% end %>
+</section>
