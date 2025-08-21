@@ -3,6 +3,6 @@ defmodule VoltWeb.CommunityController do
 
   def index(conn, params) do
     conn
-    |> render(:index, layout: false)
+    |> render(:index, layout: false, users: Volt.UserRepo.collections())
   end
 end

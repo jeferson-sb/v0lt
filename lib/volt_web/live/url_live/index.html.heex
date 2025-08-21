@@ -10,6 +10,7 @@
 <%= for {_, col} <- @streams.urls do %>
   <div class="border rounded p-5 max-w-lg">
     <p class="font-bold text-lg mb-2">{col.name}</p>
+    <span>{col.likes}</span>
     <hr />
     <ul>
       <%= for url <- col.urls do %>

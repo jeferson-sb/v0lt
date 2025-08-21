@@ -6,6 +6,10 @@ defmodule Volt.UserRepo do
     User |> Repo.all()
   end
 
+  def collections do
+    User |> Repo.all() |> Volt.Repo.preload(:collections)
+  end
+
   def find_or_create(attrs \\ %{}) do
     case User |> Repo.get_by(username: attrs["username"]) do
       %User{} = user ->
