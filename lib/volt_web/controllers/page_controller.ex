@@ -11,7 +11,7 @@ defmodule VoltWeb.PageController do
     user |> Volt.UserRepo.find_or_create()
 
     conn
-    |> redirect(to: "/links", username: "test1")
+    |> redirect(to: "/")
     |> halt()
   end
 end

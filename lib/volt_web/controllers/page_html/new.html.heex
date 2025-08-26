@@ -1,8 +1,9 @@
 <section>
+  <img class="object-cover absolute h-full w-full" src={static_path(@conn, "/images/mesh_gradient.jpg")} alt="background mesh gradient" />
   <div
     aria-describedby="join-card-explanation"
     aria-labelledby="join-card"
-    class="fixed left-1/2 top-1/2 z-10 grid max-h-[calc(100%-4rem)] w-full -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto border bg-background p-6 shadow-lg shadow-black/5 duration-200 sm:max-w-[400px] sm:rounded-xl"
+    class="fixed left-1/2 top-1/2 z-10 grid max-h-[calc(100%-4rem)] w-full -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto border bg-[#FEF8ED] p-6 shadow-lg shadow-black/5 duration-200 sm:max-w-[400px] sm:rounded-xl"
     tabindex="-1"
   >
     <div class="flex flex-col items-center gap-2">
@@ -11,7 +12,7 @@
         aria-hidden="true"
       >
         <svg
-          class="stroke-zinc-800 dark:stroke-zinc-100"
+          class="stroke-zinc-100 dark:stroke-zinc-600"
           xmlns="http://www.w3.org/2000/svg"
           width="20"
           height="20"
@@ -31,29 +32,28 @@
       </div>
     </div>
 
-    <.form :let={f} for={@changeset} action={~p"/users"} class="space-y-5">
+    <.form :let={f} for={@changeset} action={~p"/join"} class="space-y-5">
       <div class="space-y-4">
         <div class="space-y-2">
-          <label
-            class="text-sm font-medium leading-4 text-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            for="username"
-          >
-            Username
-          </label>
-          <.input
-            type="text"
-            field={f[:username]}
-            class="flex h-9 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm shadow-black/5 transition-shadow placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50"
-            id="username"
-            placeholder="@peanutbutterjelly"
-            required
-          />
+          <div class="flex">
+            <span class="inline-flex items-center px-4 text-sm text-zinc-900 bg-violet-200 border border-zinc-300 rounded-s-2xl">
+              @
+            </span>
+            <.input
+              type="text"
+              field={f[:username]}
+              class="block w-full text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-e-2xl bg-violet-100 border border-zinc-300"
+              id="username"
+              placeholder="peanutbutterjelly"
+              required
+            />
+          </div>
         </div>
       </div>
 
       <button
         type="submit"
-        class="inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-colors outline-offset-2 focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 bg-primary text-primary-foreground shadow-sm shadow-black/5 hover:bg-primary/90 h-9 px-4 py-2 w-full"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-2xl text-sm font-medium transition-colors outline-offset-2 focus-visible:outline-2 focus-visible:outline-ring/70 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 bg-[#E16465] text-primary-foreground shadow-sm shadow-black/5 h-9 px-4 py-2 w-full"
       >
         Join
       </button>
