@@ -11,10 +11,8 @@ defmodule Volt.Collection do
     timestamps(type: :utc_datetime)
   end
 
-  @doc false
   def changeset(collection, attrs) do
     collection
-    # is user_id required?
     |> cast(attrs, [:name, :user_id])
     |> validate_required([:name, :user_id])
     |> unique_constraint(:name)

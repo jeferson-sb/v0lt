@@ -17,14 +17,11 @@ defmodule VoltWeb.Router do
   scope "/", VoltWeb do
     pipe_through :browser
 
-    get "/", PageController, :new
-    post "/users", PageController, :create
-    get "/community", CommunityController, :index
+    get "/join", PageController, :new
+    post "/join", PageController, :create
 
-    live "/links", UrlLive.Index, :index
-    live "/links/new", UrlLive.Index, :new
-    live "/collection", CollectionLive.Index, :index
-    live "/collection/new", CollectionLive.Index, :new
+    live "/", UrlLive.Index, :index
+    live "/new", UrlLive.Index, :new
   end
 
   # Other scopes may use custom stacks.

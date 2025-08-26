@@ -10,10 +10,8 @@ defmodule Volt.Url do
     timestamps(type: :utc_datetime)
   end
 
-  @doc false
   def changeset(url, attrs) do
     url
-    # is collection required?
     |> cast(attrs, [:link, :title, :collection_id])
     |> validate_required([:link])
   end
