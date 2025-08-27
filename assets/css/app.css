@@ -3,3 +3,19 @@
 @import "tailwindcss/utilities";
 
 /* This file is for your main application CSS */
+
+#my-collection::-webkit-scrollbar {
+  background-color: initial;
+  width: 0.50rem;
+  height: 0.50rem;
+}
+
+#my-collection::-webkit-scrollbar-thumb {
+  background-color: #E4DFE5;
+  border-radius: 0.25rem;
+}
+
+#my-collection::-webkit-scrollbar-track {
+  background-color: #FEF8ED;
+  border-radius: 0.25rem;
+}
