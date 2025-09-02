@@ -21,6 +21,11 @@ defmodule Volt.CollectionRepo do
     |> Repo.get_by(id: id)
   end
 
+  def get_user_collections(user_id) do
+    Collection
+    |> Repo.all_by(user_id: user_id)
+  end
+
   def delete_collection(collection) do
     collection
     |> Repo.delete()

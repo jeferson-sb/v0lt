@@ -1,14 +1,15 @@
 <div class="mb-12">
   <h2 class="mb-4 font-bold text-2xl font-title">My Collections</h2>
   <div id="my-collection" class="flex gap-6 overflow-x-auto pb-2">
-    <%= for {_, col} <- @streams.urls do %>
+    <%= for col <- @my_collections do %>
       <div class="border rounded-lg p-5 w-80 flex-none">
-        <div class="flex justify-between mb-5">
+        <div class="flex flex-wrap justify-between mb-5">
           <p class="font-medium text-base font-title">{col.name}</p>
           <div>
             <.icon name="hero-heart-solid" />
             <span class="align-middle">{col.likes}</span>
           </div>
+          <span class="basis-full text-sm italic text-zinc-600">by @{col.user.username}</span>
         </div>
 
         <ul>
@@ -39,14 +40,15 @@
   <h2 class="mb-4 font-bold text-2xl font-title">Explore Collections</h2>
 
   <div class="mx-auto grid gap-6 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-    <%= for {_, col} <- @streams.urls do %>
+    <%= for col <- @collections do %>
       <div class="border rounded-lg p-5">
-        <div class="flex justify-between mb-5">
+        <div class="flex flex-wrap justify-between mb-5">
           <p class="font-medium text-base font-title">{col.name}</p>
           <div>
             <.icon name="hero-heart-solid" />
             <span class="align-middle">{col.likes}</span>
           </div>
+          <span class="basis-full text-sm italic text-zinc-600">by @{col.user.username}</span>
         </div>
 
         <ul>

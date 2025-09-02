@@ -6,7 +6,7 @@ defmodule Volt.Collection do
     field :name, :string
     field :likes, :integer
 
-    belongs_to(:user, Volt.User)
+    belongs_to(:user, Volt.Accounts.User)
     has_many(:urls, Volt.Url, on_delete: :delete_all)
     timestamps(type: :utc_datetime)
   end

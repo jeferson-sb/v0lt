@@ -6,8 +6,15 @@ defmodule VoltWeb.UrlLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    collections = Volt.CollectionRepo.all() |> Volt.Repo.preload(:urls)
-    {:ok, stream(socket, :urls, collections)}
+    collections = Volt.CollectionRepo.all() |> Volt.Repo.preload([:urls, :user])
+    user_collections = Enum.filter(collections, fn collection -> collection.user_id == socket.assigns.current_user.id end)
+
+    socket =
+      socket
+      |> assign(:my_collections, user_collections)
+      |> assign(:collections, collections)
+
+    {:ok, socket}
   end
 
   @impl true
@@ -23,7 +30,7 @@ defmodule VoltWeb.UrlLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Collection")
+    |> assign(:page_title, "Collections")
     |> assign(:url, nil)
   end
 
@@ -36,8 +43,6 @@ defmodule VoltWeb.UrlLive.Index do
   def handle_info({VoltWeb.CollectionLive.FormComponent, {:saved, collection}}, socket) do
     {:noreply, stream_insert(socket, :collections, collection)}
   end
-
-  # Some helpers
 
   def prepend_url(url) do
     case url |> String.starts_with?(["http://", "https://"]) do
