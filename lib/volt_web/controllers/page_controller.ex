@@ -1,9 +1,9 @@
 defmodule VoltWeb.PageController do
   use VoltWeb, :controller
-  alias Volt.User
+  alias Volt.Accounts.User
 
   def new(conn, _params) do
-    changeset = User.changeset(%User{}, %{})
+    changeset = User.registration_changeset(%User{}, %{})
     render(conn, :new, layout: false, changeset: changeset)
   end
 

@@ -1,6 +1,6 @@
 defmodule Volt.UserRepo do
   alias Volt.Repo
-  alias Volt.User
+  alias Volt.Accounts.User
 
   def all do
     User |> Repo.all()
