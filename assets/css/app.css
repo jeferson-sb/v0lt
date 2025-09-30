@@ -1,6 +1,16 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import "tailwindcss" source(none);
+@source "../css";
+@source "../js";
+@source "../../lib/volt_web";
+
+@theme {
+  --color-seashell: oklch(0.9808 0.0159 82.79);
+  --color-platinum: oklch(0.9093 0.0097 320.55);
+  --color-light_red: oklch(0.6575 0.1566 21.88);
+  --color-beige: oklch(0.8683 0.0134 82.4);
+  --font-title: Plus Jakarta Sans;
+  --font-body: Plus Jakarta Sans;
+}
 
 /* This file is for your main application CSS */
 
