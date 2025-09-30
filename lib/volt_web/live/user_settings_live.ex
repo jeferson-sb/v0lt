@@ -10,90 +10,89 @@ defmodule VoltWeb.UserSettingsLive do
       <:subtitle>Manage your account email address and password settings</:subtitle>
     </.header>
 
-    <div class="space-y-12 divide-y flex flex-col items-center">
-      <div>
-        <.simple_form
-          for={@email_form}
-          id="email_form"
-          phx-submit="update_email"
-          phx-change="validate_email"
-        >
-          <.input
-            field={@email_form[:email]}
-            class="py-2 block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
-            type="email"
-            label="Email"
-            required
-          />
-          <.input
-            field={@email_form[:current_password]}
-            class="py-2 block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
-            name="current_password"
-            id="current_password_for_email"
-            type="password"
-            label="Current password"
-            value={@email_form_current_password}
-            required
-          />
-          <:actions>
-            <button
-              phx-disable-with="Changing..."
-              class="px-4 py-2 rounded-2xl text-sm font-medium font-body bg-light_red text-primary-foreground"
-            >
-              Change Email
-            </button>
-          </:actions>
-        </.simple_form>
-      </div>
-      <div>
-        <.simple_form
-          for={@password_form}
-          id="password_form"
-          action={~p"/users/log_in?_action=password_updated"}
-          method="post"
-          phx-change="validate_password"
-          phx-submit="update_password"
-          phx-trigger-action={@trigger_submit}
-        >
-          <input
-            name={@password_form[:email].name}
-            type="hidden"
-            id="hidden_user_email"
-            value={@current_email}
-          />
-          <.input
-            field={@password_form[:password]}
-            class="py-2 block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
-            type="password"
-            label="New password"
-            required
-          />
-          <.input
-            field={@password_form[:password_confirmation]}
-            class="py-2 block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
-            type="password"
-            label="Confirm new password"
-          />
-          <.input
-            field={@password_form[:current_password]}
-            class="py-2 block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
-            name="current_password"
-            type="password"
-            label="Current password"
-            id="current_password_for_password"
-            value={@current_password}
-            required
-          />
-          <:actions>
-            <button
-              phx-disable-with="Changing..."
-              class="px-4 py-2 rounded-2xl text-sm font-medium font-body bg-light_red text-primary-foreground"
-            >
-            Change Password
+    <div class="space-y-12 flex flex-col items-center">
+      <.simple_form
+        for={@email_form}
+        id="email_form"
+        phx-submit="update_email"
+        phx-change="validate_email"
+        class="w-full max-w-lg"
+      >
+        <.input
+          field={@email_form[:email]}
+          class="py-2 px-4 w-full block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
+          type="email"
+          label="Email"
+          required
+        />
+        <.input
+          field={@email_form[:current_password]}
+          class="py-2 px-4 w-full block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
+          name="current_password"
+          id="current_password_for_email"
+          type="password"
+          label="Current password"
+          value={@email_form_current_password}
+          required
+        />
+        <:actions>
+          <button
+            phx-disable-with="Changing..."
+            class="px-4 py-2 rounded-2xl cursor-pointer text-sm font-medium font-body bg-light_red text-primary-foreground"
+          >
+            Change Email
           </button>
-          </:actions>
-        </.simple_form>
-      </div>
+        </:actions>
+      </.simple_form>
+
+      <.simple_form
+        for={@password_form}
+        id="password_form"
+        action={~p"/users/log_in?_action=password_updated"}
+        class="w-full max-w-lg"
+        method="post"
+        phx-change="validate_password"
+        phx-submit="update_password"
+        phx-trigger-action={@trigger_submit}
+      >
+        <input
+          name={@password_form[:email].name}
+          type="hidden"
+          id="hidden_user_email"
+          value={@current_email}
+        />
+        <.input
+          field={@password_form[:password]}
+          class="py-2 px-4 w-full block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
+          type="password"
+          label="New password"
+          required
+        />
+        <.input
+          field={@password_form[:password_confirmation]}
+          class="py-2 px-4 w-full block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
+          type="password"
+          label="Confirm new password"
+        />
+        <.input
+          field={@password_form[:current_password]}
+          class="py-2 px-4 w-full text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
+          name="current_password"
+          type="password"
+          label="Current password"
+          id="current_password_for_password"
+          value={@current_password}
+          required
+        />
+        <:actions>
+          <button
+            phx-disable-with="Changing..."
+            class="px-4 py-2 rounded-2xl cursor-pointer text-sm font-medium font-body bg-light_red text-primary-foreground"
+          >
+          Change Password
+        </button>
+        </:actions>
+      </.simple_form>
     </div>
     """
   end

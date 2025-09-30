@@ -17,7 +17,13 @@
             <li class="py-1 flex items-center gap-2">
               <.icon name="hero-link" class="flex-shrink-0 h-5 w-5" />
               <div class="overflow-hidden text-ellipsis">
-                <a href={prepend_url(url.link)} class="hover:underline text-sm whitespace-nowrap" target="_blank">{url.link}</a>
+                <a
+                  href={prepend_url(url.link)}
+                  class="hover:underline text-sm whitespace-nowrap"
+                  target="_blank"
+                >
+                  {url.link}
+                </a>
               </div>
             </li>
           <% end %>
@@ -27,10 +33,11 @@
   </div>
 </div>
 
-<button 
-  type="button" 
-  class="phx-submit-loading:opacity-75 font-body rounded-lg bg-platinum hover:bg-violet-200 py-2 px-3 text-sm font-semibold leading-6 text-black active:text-white/80">
-  <.icon name="hero-plus" /> 
+<button
+  type="button"
+  class="phx-submit-loading:opacity-75 font-body cursor-pointer transition-colors transition-discrete rounded-lg bg-platinum hover:bg-violet-200 py-2 px-3 text-sm font-semibold leading-6 text-black active:text-white/80"
+>
+  <.icon name="hero-plus" />
   <span class="align-middle">
     Create new collection
   </span>
@@ -56,7 +63,13 @@
             <li class="py-1 flex items-center gap-2">
               <.icon name="hero-link" class="flex-shrink-0 h-5 w-5" />
               <div class="overflow-hidden text-ellipsis">
-                <a href={prepend_url(url.link)} class="hover:underline text-sm whitespace-nowrap" target="_blank">{url.link}</a>
+                <a
+                  href={prepend_url(url.link)}
+                  class="hover:underline text-sm whitespace-nowrap"
+                  target="_blank"
+                >
+                  {url.link}
+                </a>
               </div>
             </li>
           <% end %>

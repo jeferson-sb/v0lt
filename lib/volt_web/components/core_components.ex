@@ -202,7 +202,7 @@ defmodule VoltWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="space-y-3">
+      <div class="space-y-4">
         {render_slot(@inner_block, f)}
         <div :for={action <- @actions} class="flex items-center justify-between gap-6">
           {render_slot(action, f)}
@@ -391,7 +391,7 @@ defmodule VoltWeb.CoreComponents do
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-800">
+    <label for={@for} class="block text-sm font-semibold leading-6 text-zinc-500">
       {render_slot(@inner_block)}
     </label>
     """

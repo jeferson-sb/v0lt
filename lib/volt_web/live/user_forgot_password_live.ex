@@ -5,7 +5,7 @@ defmodule VoltWeb.UserForgotPasswordLive do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-md w-2/4 p-6 border bg-seashell shadow-lg shadow-black/5 rounded-xl">
+    <div class="max-w-md w-2/4 p-6 border border-zinc-300 bg-seashell shadow-lg shadow-black/5 rounded-xl">
       <.header class="text-center font-title mb-4">
         Forgot your password?
         <:subtitle>We'll send a password reset link to your inbox</:subtitle>
@@ -14,7 +14,7 @@ defmodule VoltWeb.UserForgotPasswordLive do
       <.simple_form for={@form} id="reset_password_form" phx-submit="send_email">
         <.input
           field={@form[:email]}
-          class="py-2 block w-full text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
+          class="py-2 px-4 block w-full text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
           type="email"
           placeholder="Email"
           required
@@ -22,7 +22,7 @@ defmodule VoltWeb.UserForgotPasswordLive do
         <:actions>
           <button
             phx-disable-with="Sending..."
-            class="w-full mt-2 px-4 py-2 rounded-2xl text-sm font-medium font-body bg-light_red text-primary-foreground shadow-sm shadow-black/5 disabled:pointer-events-none disabled:opacity-50"
+            class="w-full mt-2 px-4 py-2 cursor-pointer rounded-2xl text-sm font-medium font-body bg-light_red text-primary-foreground shadow-sm shadow-black/5 disabled:pointer-events-none disabled:opacity-50"
           >
             Send password reset instructions
           </button>
