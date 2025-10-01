@@ -3,6 +3,8 @@
 @source "../js";
 @source "../../lib/volt_web";
 
+@plugin "../vendor/heroicons";
+
 @theme {
   --color-seashell: oklch(0.9808 0.0159 82.79);
   --color-platinum: oklch(0.9093 0.0097 320.55);
