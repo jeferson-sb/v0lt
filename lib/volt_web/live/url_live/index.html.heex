@@ -2,7 +2,7 @@
   <h2 class="mb-4 font-bold text-2xl font-title">My Collections</h2>
   <div id="my-collection" class="flex gap-6 overflow-x-auto pb-2">
     <%= for col <- @my_collections do %>
-      <div class="border rounded-lg p-5 w-80 flex-none">
+      <div class="border border-zinc-300 rounded-lg p-5 w-80 flex-none">
         <div class="flex flex-wrap justify-between mb-5">
           <p class="font-medium text-base font-title">{col.name}</p>
           <div>
@@ -33,22 +33,22 @@
   </div>
 </div>
 
-<button
-  type="button"
-  class="phx-submit-loading:opacity-75 font-body cursor-pointer transition-colors transition-discrete rounded-lg bg-platinum hover:bg-violet-200 py-2 px-3 text-sm font-semibold leading-6 text-black active:text-white/80"
+<a
+  href={"/new"}
+  class="phx-submit-loading:opacity-75 font-body cursor-pointer inline-block transition-colors transition-discrete rounded-lg bg-platinum hover:bg-violet-200 py-2 px-3 text-sm font-semibold leading-6 text-black"
 >
   <.icon name="hero-plus" />
   <span class="align-middle">
     Create new collection
   </span>
-</button>
+</a>
 
 <div class="mt-5">
   <h2 class="mb-4 font-bold text-2xl font-title">Explore Collections</h2>
 
   <div class="mx-auto grid gap-6 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
     <%= for col <- @collections do %>
-      <div class="border rounded-lg p-5">
+      <div class="border border-zinc-200 rounded-lg p-5">
         <div class="flex flex-wrap justify-between mb-5">
           <p class="font-medium text-base font-title">{col.name}</p>
           <div>
@@ -79,13 +79,13 @@
   </div>
 </div>
 
-<.modal :if={@live_action in [:new, :edit]} id="url-modal" show on_cancel={JS.patch(~p"/links")}>
+<.modal :if={@live_action in [:new, :edit]} id="collection-modal" show on_cancel={JS.patch(~p"/")}>
   <.live_component
-    module={VoltWeb.UrlLive.FormComponent}
-    id={@url.id || :new}
+    module={VoltWeb.CollectionLive.FormComponent}
+    id={@collection.id || :new}
     title={@page_title}
     action={@live_action}
-    url={@url}
-    patch={~p"/links"}
+    collection={@collection}
+    patch={~p"/new"}
   />
 </.modal>

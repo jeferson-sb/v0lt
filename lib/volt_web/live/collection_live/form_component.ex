@@ -6,20 +6,30 @@ defmodule VoltWeb.CollectionLive.FormComponent do
   @impl true
   def render(assigns) do
     ~H"""
-    <div>
+    <div class="space-y-2 min-w-[300px]">
       <.header>
         {@title}
-        <:subtitle>Use this form to manage collection records in your database.</:subtitle>
+        <:subtitle>Enter your new collection</:subtitle>
       </.header>
 
       <.simple_form
         for={@form}
         id="collection-form"
+        class="w-full"
         phx-target={@myself}
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:name]} type="text" label="Name" />
+        <div class="flex rounded-lg shadow-sm shadow-black/5">
+          <.input
+            field={@form[:name]}
+            type="text"
+            label="Name"
+            class="flex h-9 w-full rounded-lg border border-zinc-300 bg-background px-3 py-2 text-sm text-foreground shadow-black/5 transition-shadow placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[2px] ring-zinc-200 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50 z-10 -ms-px shadow-none"
+            placeholder="My Collection"
+          />
+        </div>
+
         <:actions>
           <.button phx-disable-with="Saving...">Save Collection</.button>
         </:actions>
@@ -64,7 +74,9 @@ defmodule VoltWeb.CollectionLive.FormComponent do
   end
 
   defp save_collection(socket, :new, collection_params) do
-    case CollectionRepo.create_collection(collection_params) do
+    collection_params = Map.put(collection_params, "user_id", socket.assigns.current_user.id)
+
+    case CollectionRepo.create(collection_params) do
       {:ok, collection} ->
         notify_parent({:saved, collection})
 
