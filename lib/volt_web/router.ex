@@ -58,10 +58,9 @@ defmodule VoltWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{VoltWeb.UserAuth, :ensure_authenticated}] do
-      live "/", UrlLive.Index, :index #rename to collectionlive.index
-      live "/temp", CollectionLive.Index, :index
+      live "/", CollectionLive.Index, :index
       live "/new", CollectionLive.Index, :new
-      # live "/url/new", UrlLive.Index, :new
+      live "/url/new", CollectionLive.Index, :new_url
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

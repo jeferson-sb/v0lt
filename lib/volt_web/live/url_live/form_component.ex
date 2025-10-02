@@ -3,7 +3,6 @@ defmodule VoltWeb.UrlLive.FormComponent do
 
   alias Volt.UrlRepo
   alias Volt.CollectionRepo
-  alias Volt.Link
 
   @impl true
   def render(assigns) do
@@ -60,16 +59,6 @@ defmodule VoltWeb.UrlLive.FormComponent do
   end
 
   @impl true
-  def update(%{collection: collection} = assigns, socket) do
-    {:ok,
-     socket
-     |> assign(assigns)
-     |> assign_new(:form, fn ->
-       to_form(CollectionRepo.change(collection))
-     end)}
-  end
-
-  @impl true
   def handle_event("validate", %{"url" => url_params}, socket) do
     changeset = UrlRepo.change(socket.assigns.url, url_params)
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
@@ -79,7 +68,9 @@ defmodule VoltWeb.UrlLive.FormComponent do
     save_url(socket, socket.assigns.action, url_params)
   end
 
-  defp save_url(socket, :new, url_params) do
+  defp save_url(socket, :new_url, url_params) do
+    url_params = Map.put(url_params, "collection_id", socket.assigns.collection_id)
+
     case UrlRepo.create(url_params) do
       {:ok, url} ->
         notify_parent({:saved, url})
