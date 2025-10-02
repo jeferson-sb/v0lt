@@ -13,6 +13,6 @@ defmodule Volt.Url do
   def changeset(url, attrs) do
     url
     |> cast(attrs, [:link, :title, :collection_id])
-    |> validate_required([:link])
+    |> validate_required([:link, :collection_id])
   end
 end
