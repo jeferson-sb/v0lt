@@ -60,7 +60,7 @@ defmodule VoltWeb.Router do
       on_mount: [{VoltWeb.UserAuth, :ensure_authenticated}] do
       live "/", CollectionLive.Index, :index
       live "/new", CollectionLive.Index, :new
-      live "/url/new", CollectionLive.Index, :new_url
+      live "/collection/:collection_id/url", CollectionLive.Index, :new_url
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
     end

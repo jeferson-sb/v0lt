@@ -29,7 +29,7 @@
           <% end %>
         </ul>
 
-        <.link patch={~p"/url/new?collection_id=#{col.id}"}>
+        <.link patch={~p"/collection/#{col.id}/url"}>
           <.button class="cursor-pointer mt-4" aria-label="Add"><.icon name="hero-plus" /></.button>
         </.link>
       </div>
@@ -37,15 +37,15 @@
   </div>
 </div>
 
-<a
-  href={"/new"}
+<.link
+  patch={~p"/new"}
   class="phx-submit-loading:opacity-75 font-body cursor-pointer inline-block transition-colors transition-discrete rounded-lg bg-platinum hover:bg-violet-200 py-2 px-3 text-sm font-semibold leading-6 text-black"
 >
   <.icon name="hero-plus" />
   <span class="align-middle">
     Create new collection
   </span>
-</a>
+</.link>
 
 <div class="mt-5">
   <h2 class="mb-4 font-bold text-2xl font-title">Explore Collections</h2>
@@ -102,6 +102,7 @@
     title={@page_title}
     action={@live_action}
     url={@url}
+    collection_id={@collection_id}
     current_user={@current_user}
     patch={~p"/"}
   />
