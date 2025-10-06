@@ -1,29 +1,48 @@
 defmodule VoltWeb.CollectionLive.Index do
   use VoltWeb, :live_view
 
-  alias Volt.CollectionRepo
-  alias Volt.Collection
+  alias Volt.{Collections, Collection}
   alias Volt.Url
 
   @impl true
   def mount(_params, _session, socket) do
-    collections = Volt.CollectionRepo.all() |> Volt.Repo.preload([:urls, :user])
-    user_collections = Enum.filter(collections, fn collection -> collection.user_id == socket.assigns.current_user.id end)
-
-    socket =
-      socket
-      |> assign(:my_collections, user_collections)
-      |> assign(:collections, collections)
-
+    socket = load_collections(socket)
     {:ok, socket}
+  end
+
+  defp load_collections(socket) do
+    user_id = socket.assigns.current_user.id
+    collections_with_likes = Collections.list_collections_with_likes(user_id)
+
+    # Preload the user association for display purposes
+    collections =
+      collections_with_likes
+      |> Enum.map(& &1.collection)
+      |> Volt.Repo.preload([:urls, :user])
+
+    # Rebuild the collections with likes data including the preloaded associations
+    collections_with_likes =
+      Enum.zip(collections, collections_with_likes)
+      |> Enum.map(fn {collection_with_preload, like_data} ->
+        Map.put(like_data, :collection, collection_with_preload)
+      end)
+
+    user_collections =
+      Enum.filter(collections_with_likes, fn %{collection: collection} ->
+        collection.user_id == user_id
+      end)
+
+    socket
+    |> assign(:my_collections, user_collections)
+    |> assign(:collections, collections_with_likes)
   end
 
   @impl true
   def handle_params(params, _url, socket) do
     socket =
       case params["collection_id"] do
+        nil -> socket
         collection_id -> assign(socket, collection_id: collection_id)
-        _ -> socket
       end
 
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
@@ -32,7 +51,7 @@ defmodule VoltWeb.CollectionLive.Index do
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Collection")
-    |> assign(:collection, CollectionRepo.get_collection!(id))
+    |> assign(:collection, Collections.get_collection!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -64,10 +83,22 @@ defmodule VoltWeb.CollectionLive.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    collection = CollectionRepo.get_collection!(id)
-    {:ok, _} = CollectionRepo.delete_collection(collection)
+    collection = Collections.get_collection!(id)
+    {:ok, _} = Collections.delete_collection(collection)
 
     {:noreply, stream_delete(socket, :collections, collection)}
+  end
+
+  @impl true
+  def handle_event("like", %{"collection_id" => collection_id, "user_id" => user_id}, socket) do
+    case Collections.toggle_like(user_id, collection_id) do
+      {:ok, _action} ->
+        socket = load_collections(socket)
+        {:noreply, socket}
+
+      {:error, _changeset} ->
+        {:noreply, socket}
+    end
   end
 
   def prepend_url(url) do

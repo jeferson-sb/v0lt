@@ -11,6 +11,8 @@ defmodule Volt.Accounts.User do
     field :confirmed_at, :utc_datetime
 
     has_many(:collections, Volt.Collection, on_delete: :delete_all)
+    has_many(:collection_likes, Volt.Collection.CollectionLike, on_delete: :delete_all)
+    has_many(:liked_collections, through: [:collection_likes, :collection])
 
     timestamps(type: :utc_datetime)
   end

@@ -1,13 +1,13 @@
 <div class="mb-12">
   <h2 class="mb-4 font-bold text-2xl font-title">My Collections</h2>
   <div id="my-collection" class="flex gap-6 overflow-x-auto pb-2">
-    <%= for col <- @my_collections do %>
+    <%= for %{collection: col, likes_count: likes_count} <- @my_collections do %>
       <div class="border border-zinc-300 rounded-lg p-5 w-80 flex-none">
         <div class="flex flex-wrap justify-between mb-5">
           <p class="font-medium text-base font-title">{col.name}</p>
           <div>
             <.icon name="hero-heart-solid" />
-            <span class="align-middle">{col.likes}</span>
+            <span class="align-middle">{likes_count}</span>
           </div>
           <span class="basis-full text-sm italic text-zinc-600">by @{col.user.username}</span>
         </div>
@@ -51,14 +51,19 @@
   <h2 class="mb-4 font-bold text-2xl font-title">Explore Collections</h2>
 
   <div class="mx-auto grid gap-6 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-    <%= for col <- @collections do %>
+    <%= for %{collection: col, likes_count: likes_count, user_liked: user_liked} <- @collections do %>
       <div class="border border-zinc-200 rounded-lg p-5">
         <div class="flex flex-wrap justify-between mb-5">
           <p class="font-medium text-base font-title">{col.name}</p>
-          <div>
-            <.icon name="hero-heart-solid" />
-            <span class="align-middle">{col.likes}</span>
-          </div>
+          <button 
+            type="button" 
+            phx-debounce
+            phx-click={JS.push("like", value: %{collection_id: col.id, user_id: @current_user.id})}
+            class="cursor-pointer transition-colors transition-discrete px-2 rounded-lg hover:bg-violet-200">
+            <.icon :if={user_liked} name="hero-heart-solid" class="text-red-500" />
+            <.icon :if={!user_liked} name="hero-heart" />
+            <span class="align-middle">{likes_count}</span>
+          </button>
           <span class="basis-full text-sm italic text-zinc-600">by @{col.user.username}</span>
         </div>
 

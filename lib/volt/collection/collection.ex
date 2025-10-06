@@ -4,10 +4,12 @@ defmodule Volt.Collection do
 
   schema "collections" do
     field :name, :string
-    field :likes, :integer
 
     belongs_to(:user, Volt.Accounts.User)
     has_many(:urls, Volt.Url, on_delete: :delete_all)
+    has_many(:collection_likes, Volt.Collection.CollectionLike, on_delete: :delete_all)
+    has_many(:liked_by_users, through: [:collection_likes, :user])
+
     timestamps(type: :utc_datetime)
   end
 

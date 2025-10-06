@@ -1,7 +1,7 @@
 defmodule VoltWeb.CollectionLive.FormComponent do
   use VoltWeb, :live_component
 
-  alias Volt.CollectionRepo
+  alias Volt.Collections
 
   @impl true
   def render(assigns) do
@@ -44,13 +44,13 @@ defmodule VoltWeb.CollectionLive.FormComponent do
      socket
      |> assign(assigns)
      |> assign_new(:form, fn ->
-       to_form(CollectionRepo.change(collection))
+       to_form(Collections.change_collection(collection))
      end)}
   end
 
   @impl true
   def handle_event("validate", %{"collection" => collection_params}, socket) do
-    changeset = CollectionRepo.change(socket.assigns.collection, collection_params)
+    changeset = Collections.change_collection(socket.assigns.collection, collection_params)
     {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
   end
 
@@ -59,7 +59,7 @@ defmodule VoltWeb.CollectionLive.FormComponent do
   end
 
   defp save_collection(socket, :edit, collection_params) do
-    case CollectionRepo.update(socket.assigns.collection, collection_params) do
+    case Collections.update_collection(socket.assigns.collection, collection_params) do
       {:ok, collection} ->
         notify_parent({:saved, collection})
 
@@ -76,7 +76,7 @@ defmodule VoltWeb.CollectionLive.FormComponent do
   defp save_collection(socket, :new, collection_params) do
     collection_params = Map.put(collection_params, "user_id", socket.assigns.current_user.id)
 
-    case CollectionRepo.create(collection_params) do
+    case Collections.create_collection(collection_params) do
       {:ok, collection} ->
         notify_parent({:saved, collection})
 
