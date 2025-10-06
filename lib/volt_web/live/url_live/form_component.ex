@@ -2,7 +2,6 @@ defmodule VoltWeb.UrlLive.FormComponent do
   use VoltWeb, :live_component
 
   alias Volt.UrlRepo
-  alias Volt.CollectionRepo
 
   @impl true
   def render(assigns) do
