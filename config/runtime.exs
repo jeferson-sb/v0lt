@@ -21,15 +21,8 @@ if System.get_env("PHX_SERVER") do
 end
 
 if config_env() == :prod do
-  database_path =
-    System.get_env("DATABASE_PATH") ||
-      raise """
-      environment variable DATABASE_PATH is missing.
-      For example: /etc/volt/volt.db
-      """
-
   config :volt, Volt.Repo,
-    database: database_path,
+    database: Path.expand("../volt.db", __DIR__),
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "5")
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
