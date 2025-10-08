@@ -27,6 +27,7 @@ defmodule VoltWeb.UserSettingsLive do
         />
         <.input
           field={@email_form[:current_password]}
+          autocomplete="current-password"
           class="py-2 px-4 w-full block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
           name="current_password"
           id="current_password_for_email"
@@ -66,12 +67,14 @@ defmodule VoltWeb.UserSettingsLive do
           class="py-2 px-4 w-full block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
           type="password"
           label="New password"
+          autocomplete="new-password"
           required
         />
         <.input
           field={@password_form[:password_confirmation]}
           class="py-2 px-4 w-full block text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
           type="password"
+          autocomplete="new-password"
           label="Confirm new password"
         />
         <.input
@@ -79,6 +82,7 @@ defmodule VoltWeb.UserSettingsLive do
           class="py-2 px-4 w-full text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
           name="current_password"
           type="password"
+          autocomplete="current-password"
           label="Current password"
           id="current_password_for_password"
           value={@current_password}

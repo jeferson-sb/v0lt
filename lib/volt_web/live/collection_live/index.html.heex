@@ -14,13 +14,17 @@
 
         <ul>
           <%= for url <- col.urls do %>
-            <li class="py-1 flex items-center gap-2">
-              <.icon name="hero-link" class="flex-shrink-0 h-5 w-5" />
+            <li class="py-1 flex items-center gap-2">              
+              <.icon name="hero-link" class="flex-shrink-0 h-4 w-4 text-gray-400" />
               <div class="overflow-hidden text-ellipsis">
                 <a
                   href={prepend_url(url.link)}
-                  class="hover:underline text-sm whitespace-nowrap"
+                  class={[
+                    "hover:underline text-sm whitespace-nowrap",
+                    (url.status == "dead" || url.status == "error") && "line-through text-gray-500 cursor-not-allowed"
+                  ]}
                   target="_blank"
+                  title={"Status: #{url.status || "unchecked"}#{if url.status_code, do: " (#{url.status_code})", else: ""}"}
                 >
                   {url.link}
                 </a>
@@ -70,12 +74,16 @@
         <ul>
           <%= for url <- col.urls do %>
             <li class="py-1 flex items-center gap-2">
-              <.icon name="hero-link" class="flex-shrink-0 h-5 w-5" />
+              <.icon name="hero-link" class="flex-shrink-0 h-4 w-4 text-gray-400" />
               <div class="overflow-hidden text-ellipsis">
                 <a
                   href={prepend_url(url.link)}
-                  class="hover:underline text-sm whitespace-nowrap"
+                  class={[
+                    "hover:underline text-sm whitespace-nowrap",
+                    (url.status == "dead" || url.status == "error") && "line-through text-gray-500 cursor-not-allowed"
+                  ]}
                   target="_blank"
+                  title={"Status: #{url.status || "unchecked"}#{if url.status_code, do: " (#{url.status_code})", else: ""}"}
                 >
                   {url.link}
                 </a>
