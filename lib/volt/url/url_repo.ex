@@ -15,4 +15,14 @@ defmodule Volt.UrlRepo do
   def change(%Url{} = url, attrs \\ %{}) do
     Url.changeset(url, attrs)
   end
+
+  def get_url!(id) do
+    Url
+    |> Repo.get_by(id: id)
+  end
+
+  def delete_url(url) do
+    url
+    |> Repo.delete()
+  end
 end

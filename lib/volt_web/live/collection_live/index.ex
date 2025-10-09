@@ -3,6 +3,7 @@ defmodule VoltWeb.CollectionLive.Index do
 
   alias Volt.{Collections, Collection}
   alias Volt.Url
+  alias Volt.UrlRepo
 
   @impl true
   def mount(_params, _session, socket) do
@@ -74,11 +75,11 @@ defmodule VoltWeb.CollectionLive.Index do
 
   @impl true
   def handle_info({VoltWeb.CollectionLive.FormComponent, {:saved, collection}}, socket) do
-    {:noreply, stream_insert(socket, :collections, collection)}
+    {:noreply, stream_insert(socket, :collections, collection, :update_only)}
   end
 
   def handle_info({VoltWeb.UrlLive.FormComponent, {:saved, url}}, socket) do
-    {:noreply, stream_insert(socket, :urls, url)}
+    {:noreply, stream_insert(socket, :urls, url, :update_only)}
   end
 
   @impl true
@@ -87,6 +88,14 @@ defmodule VoltWeb.CollectionLive.Index do
     {:ok, _} = Collections.delete_collection(collection)
 
     {:noreply, stream_delete(socket, :collections, collection)}
+  end
+
+  @impl true
+  def handle_event("delete_url", %{"id" => id}, socket) do
+    url = UrlRepo.get_url!(id)
+    {:ok, _} = UrlRepo.delete_url(url)
+
+    {:noreply, stream_delete(socket, :urls, url)}
   end
 
   @impl true
