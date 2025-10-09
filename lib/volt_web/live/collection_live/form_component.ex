@@ -20,13 +20,14 @@ defmodule VoltWeb.CollectionLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <div class="flex rounded-lg shadow-sm shadow-black/5">
+        <div class="flex rounded-lg">
           <.input
             field={@form[:name]}
             type="text"
             label="Name"
             class="flex h-9 w-full rounded-lg border border-zinc-300 bg-background px-3 py-2 text-sm text-foreground shadow-black/5 transition-shadow placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[2px] ring-zinc-200 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50 z-10 -ms-px shadow-none"
             placeholder="My Collection"
+            required
           />
         </div>
 

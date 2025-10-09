@@ -26,7 +26,7 @@ defmodule VoltWeb.UrlLive.FormComponent do
         >
           Link
         </label>
-        <div class="flex rounded-lg shadow-sm shadow-black/5">
+        <div class="flex rounded-lg">
           <span class="inline-flex items-center rounded-s-lg border border-input bg-background px-3 text-sm text-muted-foreground">
             https://
           </span>
