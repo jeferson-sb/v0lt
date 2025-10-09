@@ -1,4 +1,5 @@
 <main class="grid place-items-center h-screen">
   <img class="object-cover absolute h-full w-full -z-10" src={static_path(@socket, "/images/mesh_gradient.jpg")} alt="background mesh gradient" />
+  <.flash_group flash={@flash} />
   {@inner_content}
 </main>

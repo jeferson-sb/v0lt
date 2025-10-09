@@ -146,7 +146,7 @@ defmodule VoltWeb.CoreComponents do
 
   def flash_group(assigns) do
     ~H"""
-    <div id={@id} aria-live="polite">
+    <div id={@id} aria-live="polite" class="absolute">
       <.flash kind={:info} title={gettext("Success!")} flash={@flash} />
       <.flash kind={:error} title={gettext("Error!")} flash={@flash} />
       <.flash
@@ -286,6 +286,7 @@ defmodule VoltWeb.CoreComponents do
   attr :prompt, :string, default: nil, doc: "the prompt for select inputs"
   attr :options, :list, doc: "the options to pass to Phoenix.HTML.Form.options_for_select/2"
   attr :multiple, :boolean, default: false, doc: "the multiple flag for select inputs"
+  attr :addon, :string, default: nil
 
   attr :rest, :global,
     include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
@@ -371,13 +372,18 @@ defmodule VoltWeb.CoreComponents do
     ~H"""
     <div class="flex-1">
       <.label for={@id}>{@label}</.label>
-      <input
-        type={@type}
-        name={@name}
-        id={@id}
-        value={Phoenix.HTML.Form.normalize_value(@type, @value)}
-        {@rest}
-      />
+      <div class="flex">
+        <span :if={@addon} class="inline-flex items-center rounded-s-lg border border-input bg-background px-3 text-sm text-muted-foreground">
+          {@addon}
+        </span>
+        <input
+          type={@type}
+          name={@name}
+          id={@id}
+          value={Phoenix.HTML.Form.normalize_value(@type, @value)}
+          {@rest}
+        />
+      </div>
       <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """

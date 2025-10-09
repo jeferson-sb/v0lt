@@ -26,18 +26,14 @@ defmodule VoltWeb.UrlLive.FormComponent do
         >
           Link
         </label>
-        <div class="flex rounded-lg">
-          <span class="inline-flex items-center rounded-s-lg border border-input bg-background px-3 text-sm text-muted-foreground">
-            https://
-          </span>
-          <.input
-            field={@form[:link]}
-            id="link_url"
-            type="text"
-            class="flex h-9 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground shadow-black/5 transition-shadow placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50 z-10 -ms-px rounded-s-none shadow-none"
-            placeholder="google.com"
-          />
-        </div>
+        <.input
+          field={@form[:link]}
+          addon={"https"}
+          id="link_url"
+          type="text"
+          class="flex h-9 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground shadow-black/5 transition-shadow placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50 z-10 -ms-px rounded-s-none shadow-none"
+          placeholder="google.com"
+        />
 
         <:actions>
           <.button phx-disable-with="Saving...">Save Url</.button>

@@ -26,6 +26,7 @@ defmodule VoltWeb.UserLoginLive do
         <.input
           field={@form[:password]}
           class="py-2 px-4 block w-full text-zinc-900 focus:ring-0 sm:text-sm sm:leading-6 rounded-2xl bg-platinum border border-zinc-300 focus:outline-none focus:border-zinc-400"
+          autocomplete="current-password"
           type="password"
           label="Password"
           required
