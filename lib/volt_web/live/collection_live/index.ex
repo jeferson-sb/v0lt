@@ -49,7 +49,7 @@ defmodule VoltWeb.CollectionLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
+  defp apply_action(socket, :edit, %{"collection_id" => id}) do
     socket
     |> assign(:page_title, "Edit Collection")
     |> assign(:collection, Collections.get_collection!(id))

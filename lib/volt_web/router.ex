@@ -42,7 +42,8 @@ defmodule VoltWeb.Router do
   scope "/", VoltWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
-    live_session :redirect_if_user_is_authenticated, layout: {VoltWeb.Layouts, :login},
+    live_session :redirect_if_user_is_authenticated,
+      layout: {VoltWeb.Layouts, :login},
       on_mount: [{VoltWeb.UserAuth, :redirect_if_user_is_authenticated}] do
       live "/users/register", UserRegistrationLive, :new
       live "/users/log_in", UserLoginLive, :new
@@ -60,6 +61,7 @@ defmodule VoltWeb.Router do
       on_mount: [{VoltWeb.UserAuth, :ensure_authenticated}] do
       live "/", CollectionLive.Index, :index
       live "/new", CollectionLive.Index, :new
+      live "/collection/:collection_id", CollectionLive.Index, :edit
       live "/collection/:collection_id/url", CollectionLive.Index, :new_url
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email

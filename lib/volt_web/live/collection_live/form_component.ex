@@ -9,7 +9,7 @@ defmodule VoltWeb.CollectionLive.FormComponent do
     <div class="space-y-2 min-w-[300px]">
       <.header>
         {@title}
-        <:subtitle>Enter your new collection</:subtitle>
+        <:subtitle>Enter your collection</:subtitle>
       </.header>
 
       <.simple_form
