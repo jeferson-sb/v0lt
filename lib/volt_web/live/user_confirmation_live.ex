@@ -6,12 +6,17 @@ defmodule VoltWeb.UserConfirmationLive do
   def render(%{live_action: :edit} = assigns) do
     ~H"""
     <div class="mx-auto max-w-sm">
-      <.header class="text-center">Confirm Account</.header>
+      <.header class="text-center font-title mb-4">Confirm Account</.header>
 
       <.simple_form for={@form} id="confirmation_form" phx-submit="confirm_account">
         <input type="hidden" name={@form[:token].name} value={@form[:token].value} />
         <:actions>
-          <.button phx-disable-with="Confirming..." class="w-full">Confirm my account</.button>
+          <button
+            phx-disable-with="Confirming..."
+            class="px-4 py-2 mx-auto rounded-2xl cursor-pointer text-sm font-medium font-body bg-light_red text-primary-foreground"
+          >
+          Confirm my account
+          </button>
         </:actions>
       </.simple_form>
 
