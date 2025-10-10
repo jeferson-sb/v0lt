@@ -3,7 +3,6 @@ defmodule VoltWeb.UserRegistrationLive do
 
   alias Volt.Accounts
   alias Volt.Accounts.User
-  alias VoltWeb.Layouts
 
   def render(assigns) do
     ~H"""
