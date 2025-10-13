@@ -75,11 +75,11 @@ defmodule VoltWeb.CollectionLive.Index do
 
   @impl true
   def handle_info({VoltWeb.CollectionLive.FormComponent, {:saved, collection}}, socket) do
-    {:noreply, stream_insert(socket, :collections, collection, :update_only)}
+    {:noreply, stream_insert(socket, :collections, collection, at: -1)}
   end
 
   def handle_info({VoltWeb.UrlLive.FormComponent, {:saved, url}}, socket) do
-    {:noreply, stream_insert(socket, :urls, url, :update_only)}
+    {:noreply, stream_insert(socket, :urls, url, at: -1)}
   end
 
   @impl true
@@ -108,6 +108,15 @@ defmodule VoltWeb.CollectionLive.Index do
       {:error, _changeset} ->
         {:noreply, socket}
     end
+  end
+
+  @impl true
+  def handle_event("pick", %{"id" => id, "color" => color}, socket) do
+    collection = Collections.get_collection!(id)
+    {:ok, _data} = Collections.update_collection(collection, %{color: color})
+
+    socket = load_collections(socket)
+    {:noreply, socket}
   end
 
   def prepend_url(url) do

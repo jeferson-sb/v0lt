@@ -4,6 +4,7 @@ defmodule Volt.Collection do
 
   schema "collections" do
     field :name, :string
+    field :color, :string
 
     belongs_to(:user, Volt.Accounts.User)
     has_many(:urls, Volt.Url, on_delete: :delete_all)
@@ -15,7 +16,7 @@ defmodule Volt.Collection do
 
   def changeset(collection, attrs) do
     collection
-    |> cast(attrs, [:name, :user_id])
+    |> cast(attrs, [:name, :user_id, :color])
     |> validate_required([:name, :user_id])
     |> unique_constraint(:name)
   end
