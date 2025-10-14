@@ -53,7 +53,7 @@
         </.link>
 
         <button 
-          phx-click="delete" 
+          phx-click="delete"
           phx-value-id={col.id}
           class="bg-light_red inline-flex p-2 cursor-pointer absolute -bottom-2 -right-2 rounded-full opacity-0 group-hover/collection:opacity-100 transition-opacity ease-out"
           aria-label="Delete Collection"
@@ -113,6 +113,14 @@
           </button>
           <span class="basis-full text-sm italic text-zinc-600">by @{col.user.username}</span>
         </div>
+
+        <ul class="flex flex-wrap gap-2">
+          <%= for tag <- col.tags || [] do %> 
+            <li class="py-1 flex items-center gap-2">
+              <span class="text-sm text-zinc-600">#<%= tag %></span>
+            </li>
+          <% end %>
+        </ul>
 
         <ul>
           <%= for url <- col.urls do %>

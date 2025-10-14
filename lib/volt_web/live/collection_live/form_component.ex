@@ -20,16 +20,22 @@ defmodule VoltWeb.CollectionLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <div class="flex rounded-lg">
-          <.input
-            field={@form[:name]}
-            type="text"
-            label="Name"
-            class="flex h-9 w-full rounded-lg border border-zinc-300 bg-background px-3 py-2 text-sm text-foreground shadow-black/5 transition-shadow placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[2px] ring-zinc-200 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50 z-10 -ms-px shadow-none"
-            placeholder="My Collection"
-            required
-          />
-        </div>
+        <.input
+          field={@form[:name]}
+          type="text"
+          label="Name"
+          class="flex h-9 basis-sm rounded-lg border border-zinc-300 bg-background px-3 py-2 text-sm text-foreground shadow-black/5 transition-shadow placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[2px] ring-zinc-200 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50 z-10 -ms-px shadow-none"
+          placeholder="My Collection"
+          required
+        />
+
+        <.input
+          field={@form[:tags]}
+          type="text"
+          label="Tags"
+          placeholder="video, music, science-fiction"
+          class="flex h-9 basis-sm rounded-lg border border-zinc-300 bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/70 focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[2px] ring-zinc-200 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50"
+        />
 
         <:actions>
           <.button phx-disable-with="Saving...">Save Collection</.button>
@@ -60,6 +66,8 @@ defmodule VoltWeb.CollectionLive.FormComponent do
   end
 
   defp save_collection(socket, :edit, collection_params) do
+    collection_params = process_tags(collection_params)
+
     case Collections.update_collection(socket.assigns.collection, collection_params) do
       {:ok, collection} ->
         notify_parent({:saved, collection})
@@ -75,7 +83,10 @@ defmodule VoltWeb.CollectionLive.FormComponent do
   end
 
   defp save_collection(socket, :new, collection_params) do
-    collection_params = Map.put(collection_params, "user_id", socket.assigns.current_user.id)
+    collection_params =
+      collection_params
+      |> process_tags()
+      |> Map.put("user_id", socket.assigns.current_user.id)
 
     case Collections.create_collection(collection_params) do
       {:ok, collection} ->
@@ -92,4 +103,24 @@ defmodule VoltWeb.CollectionLive.FormComponent do
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  defp process_tags(params) do
+    case Map.get(params, "tags") do
+      nil ->
+        params
+
+      tags when is_binary(tags) ->
+        processed_tags =
+          tags
+          |> String.trim()
+          |> String.split(",")
+          |> Enum.map(&String.trim/1)
+          |> Enum.reject(&(&1 == ""))
+
+        Map.put(params, "tags", processed_tags)
+
+      tags ->
+        Map.put(params, "tags", tags)
+    end
+  end
 end
