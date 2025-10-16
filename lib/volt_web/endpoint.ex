@@ -22,7 +22,7 @@ defmodule VoltWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :volt,
-    gzip: false,
+    gzip: true,
     only: VoltWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
