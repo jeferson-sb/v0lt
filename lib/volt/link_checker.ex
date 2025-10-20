@@ -14,8 +14,8 @@ defmodule Volt.LinkChecker do
   import Ecto.Query
   require Logger
 
-  # Check every 5 minutes
-  @check_interval :timer.minutes(5)
+  # Check every 10 minutes
+  @check_interval :timer.minutes(10)
   # Re-check links older than 24 hours
   @stale_threshold_hours 24
   # Maximum retry attempts
@@ -139,7 +139,6 @@ defmodule Volt.LinkChecker do
   end
 
   defp check_single_url(url_id) when is_integer(url_id) do
-    # is this needed
     url = Repo.get!(Url, url_id)
     Logger.debug("Checking URL: #{url.link}")
 
