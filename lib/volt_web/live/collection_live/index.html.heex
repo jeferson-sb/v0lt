@@ -68,11 +68,11 @@
           <.icon name="hero-pencil" class="h-4 w-4" />
         </.link>
         <div class="group/picker opacity-0 group-hover/collection:opacity-100 absolute bottom-0 right-20">
-          <button phx-click="pick" phx-value-id={col.id} phx-value-color="amber" class="w-5 h-5 bg-amber-100 cursor-pointer rounded-full border border-zinc-300"></button>
-          <button phx-click="pick" phx-value-id={col.id} phx-value-color="transparent" class="w-5 h-5 bg-zinc-100 cursor-pointer rounded-full border border-zinc-300"></button>
-          <button phx-click="pick" phx-value-id={col.id} phx-value-color="red" class="w-5 h-5 bg-red-100 cursor-pointer rounded-full border border-zinc-300"></button>
-          <button phx-click="pick" phx-value-id={col.id} phx-value-color="blue" class="w-5 h-5 bg-blue-100 cursor-pointer rounded-full border border-zinc-300"></button>
-          <button phx-click="pick" phx-value-id={col.id} phx-value-color="green" class="w-5 h-5 bg-green-100 cursor-pointer rounded-full border border-zinc-300"></button>
+          <button phx-click="pick" phx-value-id={col.id} phx-value-color="amber" aria-label="Pick amber color" class="w-5 h-5 bg-amber-100 cursor-pointer rounded-full border border-zinc-300"></button>
+          <button phx-click="pick" phx-value-id={col.id} phx-value-color="transparent" aria-label="Pick transparent color" class="w-5 h-5 bg-zinc-100 cursor-pointer rounded-full border border-zinc-300"></button>
+          <button phx-click="pick" phx-value-id={col.id} phx-value-color="red" aria-label="Pick red color" class="w-5 h-5 bg-red-100 cursor-pointer rounded-full border border-zinc-300"></button>
+          <button phx-click="pick" phx-value-id={col.id} phx-value-color="blue" aria-label="Pick blue color" class="w-5 h-5 bg-blue-100 cursor-pointer rounded-full border border-zinc-300"></button>
+          <button phx-click="pick" phx-value-id={col.id} phx-value-color="green" aria-label="Pick green color" class="w-5 h-5 bg-green-100 cursor-pointer rounded-full border border-zinc-300"></button>
         </div>
       </div>
     <% end %>
