@@ -39,6 +39,13 @@
         <li>
           <.link href={~p"/users/log_out"} method="delete">Log out</.link>
         </li>
+      <% else %>
+        <li>
+          <.link href={~p"/users/log_in"}>Log in</.link>
+        </li>
+        <li>
+          <.link href={~p"/users/register"}>Sign up</.link>
+        </li>
       <% end %>
     </ul>
   </div>

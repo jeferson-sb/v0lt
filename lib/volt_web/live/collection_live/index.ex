@@ -12,7 +12,7 @@ defmodule VoltWeb.CollectionLive.Index do
   end
 
   defp load_collections(socket) do
-    user_id = socket.assigns.current_user.id
+    user_id = if socket.assigns.current_user, do: socket.assigns.current_user.id, else: nil
     collections_with_likes = Collections.list_collections_with_likes(user_id)
 
     # Preload the user association for display purposes
@@ -29,9 +29,13 @@ defmodule VoltWeb.CollectionLive.Index do
       end)
 
     user_collections =
-      Enum.filter(collections_with_likes, fn %{collection: collection} ->
-        collection.user_id == user_id
-      end)
+      if user_id do
+        Enum.filter(collections_with_likes, fn %{collection: collection} ->
+          collection.user_id == user_id
+        end)
+      else
+        []
+      end
 
     socket
     |> assign(:my_collections, user_collections)
@@ -84,39 +88,55 @@ defmodule VoltWeb.CollectionLive.Index do
 
   @impl true
   def handle_event("delete", %{"id" => id}, socket) do
-    collection = Collections.get_collection!(id)
-    {:ok, _} = Collections.delete_collection(collection)
+    if socket.assigns.current_user do
+      collection = Collections.get_collection!(id)
+      {:ok, _} = Collections.delete_collection(collection)
 
-    {:noreply, stream_delete(socket, :collections, collection)}
+      {:noreply, stream_delete(socket, :collections, collection)}
+    else
+      {:noreply, put_flash(socket, :error, "You must be logged in to delete collections")}
+    end
   end
 
   @impl true
   def handle_event("delete_url", %{"id" => id}, socket) do
-    url = UrlRepo.get_url!(id)
-    {:ok, _} = UrlRepo.delete_url(url)
+    if socket.assigns.current_user do
+      url = UrlRepo.get_url!(id)
+      {:ok, _} = UrlRepo.delete_url(url)
 
-    {:noreply, stream_delete(socket, :urls, url)}
+      {:noreply, stream_delete(socket, :urls, url)}
+    else
+      {:noreply, put_flash(socket, :error, "You must be logged in to delete URLs")}
+    end
   end
 
   @impl true
   def handle_event("like", %{"collection_id" => collection_id, "user_id" => user_id}, socket) do
-    case Collections.toggle_like(user_id, collection_id) do
-      {:ok, _action} ->
-        socket = load_collections(socket)
-        {:noreply, socket}
+    if socket.assigns.current_user do
+      case Collections.toggle_like(user_id, collection_id) do
+        {:ok, _action} ->
+          socket = load_collections(socket)
+          {:noreply, socket}
 
-      {:error, _changeset} ->
-        {:noreply, socket}
+        {:error, _changeset} ->
+          {:noreply, socket}
+      end
+    else
+      {:noreply, put_flash(socket, :error, "You must be logged in to like collections")}
     end
   end
 
   @impl true
   def handle_event("pick", %{"id" => id, "color" => color}, socket) do
-    collection = Collections.get_collection!(id)
-    {:ok, _data} = Collections.update_collection(collection, %{color: color})
+    if socket.assigns.current_user do
+      collection = Collections.get_collection!(id)
+      {:ok, _data} = Collections.update_collection(collection, %{color: color})
 
-    socket = load_collections(socket)
-    {:noreply, socket}
+      socket = load_collections(socket)
+      {:noreply, socket}
+    else
+      {:noreply, put_flash(socket, :error, "You must be logged in to change collection colors")}
+    end
   end
 
   def prepend_url(url) do

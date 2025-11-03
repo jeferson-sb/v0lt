@@ -55,28 +55,28 @@ defmodule VoltWeb.Router do
   end
 
   scope "/", VoltWeb do
+    pipe_through [:browser]
+
+    live_session :current_user,
+      on_mount: [{VoltWeb.UserAuth, :mount_current_user}] do
+      live "/", CollectionLive.Index, :index
+      live "/users/confirm/:token", UserConfirmationLive, :edit
+      live "/users/confirm", UserConfirmationInstructionsLive, :new
+    end
+
+    delete "/users/log_out", UserSessionController, :delete
+  end
+
+  scope "/", VoltWeb do
     pipe_through [:browser, :require_authenticated_user]
 
     live_session :require_authenticated_user,
       on_mount: [{VoltWeb.UserAuth, :ensure_authenticated}] do
-      live "/", CollectionLive.Index, :index
       live "/new", CollectionLive.Index, :new
       live "/collection/:collection_id", CollectionLive.Index, :edit
       live "/collection/:collection_id/url", CollectionLive.Index, :new_url
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-    end
-  end
-
-  scope "/", VoltWeb do
-    pipe_through [:browser]
-
-    delete "/users/log_out", UserSessionController, :delete
-
-    live_session :current_user,
-      on_mount: [{VoltWeb.UserAuth, :mount_current_user}] do
-      live "/users/confirm/:token", UserConfirmationLive, :edit
-      live "/users/confirm", UserConfirmationInstructionsLive, :new
     end
   end
 end
