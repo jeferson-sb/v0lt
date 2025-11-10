@@ -6,7 +6,7 @@ defmodule VoltWeb.UserRegistrationLive do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-md w-2/4 p-6 border border-zinc-300 bg-seashell shadow-lg shadow-black/5 rounded-xl">
+    <div class="max-w-sm w-full p-6 border border-zinc-300 bg-seashell shadow-lg shadow-black/5 rounded-xl">
       <.flash_group flash={@flash} />
       <div class="flex items-center justify-center">
         <h2 class="text-lg font-semibold tracking-tight font-title">Register</h2>

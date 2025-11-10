@@ -5,7 +5,7 @@ defmodule VoltWeb.UserForgotPasswordLive do
 
   def render(assigns) do
     ~H"""
-    <div class="max-w-md w-2/4 p-6 border border-zinc-300 bg-seashell shadow-lg shadow-black/5 rounded-xl">
+    <div class="max-w-sm w-full p-6 border border-zinc-300 bg-seashell shadow-lg shadow-black/5 rounded-xl">
       <.header class="text-center font-title mb-4">
         Forgot your password?
         <:subtitle>We'll send a password reset link to your inbox</:subtitle>
