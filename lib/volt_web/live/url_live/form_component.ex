@@ -73,7 +73,7 @@ defmodule VoltWeb.UrlLive.FormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Link created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+         |> push_navigate(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}

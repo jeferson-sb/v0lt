@@ -95,7 +95,7 @@ defmodule VoltWeb.CollectionLive.FormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Collection created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+         |> push_navigate(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, form: to_form(changeset))}
