@@ -154,7 +154,6 @@ defmodule Volt.LinkChecker do
           response =
             Req.head!(full_url,
               max_redirects: 3,
-              connect_options: [timeout: 5_000],
               receive_timeout: 8_000,
               retry: false
             )
