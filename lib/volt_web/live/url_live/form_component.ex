@@ -63,12 +63,25 @@ defmodule VoltWeb.UrlLive.FormComponent do
     save_url(socket, socket.assigns.action, url_params)
   end
 
+  defp get_url_title(%Volt.Url{link: url}) do
+    {:ok, document} = Req.get!(url).body |> Floki.parse_document
+    document |> Floki.find("title") |> Floki.text |> String.trim
+  end
+
+  defp update_url_title(url) do
+    title = get_url_title(url)
+    UrlRepo.update(url, %{title: title})
+  end
+
   defp save_url(socket, :new_url, url_params) do
     url_params = Map.put(url_params, "collection_id", socket.assigns.collection_id)
 
     case UrlRepo.create(url_params) do
       {:ok, url} ->
         notify_parent({:saved, url})
+
+        task = Task.async(fn -> update_url_title(url) end)
+        Task.await(task)
 
         {:noreply,
          socket
