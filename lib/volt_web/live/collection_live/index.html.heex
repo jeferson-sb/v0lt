@@ -33,7 +33,7 @@
                     target="_blank"
                     title={"Status: #{url.status || "unchecked"}#{if url.status_code, do: " (#{url.status_code})", else: ""}"}
                   >
-                    {url.link}
+                    {if(url.title, do: url.title, else: url.link)}
                   </a>
                   <button 
                     phx-click="delete_url" 
@@ -138,7 +138,7 @@
                   target="_blank"
                   title={"Status: #{url.status || "unchecked"}#{if url.status_code, do: " (#{url.status_code})", else: ""}"}
                 >
-                  {url.link}
+                  {if(url.title, do: url.title, else: url.link)}
                 </a>
               </div>
             </li>
