@@ -15,9 +15,9 @@ defmodule Volt.LinkChecker do
   require Logger
 
   # Check every 10 minutes
-  @check_interval :timer.minutes(10)
-  # Re-check links older than 24 hours
-  @stale_threshold_hours 24
+  @check_interval :timer.hours(8)
+  # Re-check links older than 48 hours
+  @stale_threshold_hours 48
   # Maximum retry attempts
   @max_attempts 3
   # Process links in batches
