@@ -32,7 +32,6 @@ if config_env() == :prod do
     url: database_url,
     ssl: [verify: :verify_none],
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    socket_options: [:inet6],
     prepare: :unnamed
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
