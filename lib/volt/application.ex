@@ -16,6 +16,7 @@ defmodule Volt.Application do
       {Phoenix.PubSub, name: Volt.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: Volt.Finch},
+      {Task.Supervisor, name: Volt.TaskSupervisor},
       # Start the LinkChecker background process
       Volt.LinkChecker,
       # Start a worker by calling: Volt.Worker.start_link(arg)

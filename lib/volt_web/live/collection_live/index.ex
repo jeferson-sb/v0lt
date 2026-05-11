@@ -7,8 +7,14 @@ defmodule VoltWeb.CollectionLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    socket = load_collections(socket)
-    {:ok, socket}
+    if connected?(socket) do
+      {:ok, load_collections(socket)}
+    else
+      {:ok,
+       socket
+       |> assign(:my_collections, [])
+       |> assign(:collections, [])}
+    end
   end
 
   defp load_collections(socket) do
@@ -78,12 +84,12 @@ defmodule VoltWeb.CollectionLive.Index do
   end
 
   @impl true
-  def handle_info({VoltWeb.CollectionLive.FormComponent, {:saved, collection}}, socket) do
-    {:noreply, stream_insert(socket, :collections, collection, at: -1)}
+  def handle_info({VoltWeb.CollectionLive.FormComponent, {:saved, _collection}}, socket) do
+    {:noreply, load_collections(socket)}
   end
 
-  def handle_info({VoltWeb.UrlLive.FormComponent, {:saved, url}}, socket) do
-    {:noreply, stream_insert(socket, :urls, url, at: -1)}
+  def handle_info({VoltWeb.UrlLive.FormComponent, {:saved, _url}}, socket) do
+    {:noreply, load_collections(socket)}
   end
 
   @impl true
